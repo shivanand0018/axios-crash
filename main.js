@@ -1,21 +1,34 @@
 // GET REQUEST
 function getTodos() {
   console.log('GET Request');
+  axios.get('https://jsonplaceholder.typicode.com/todos').then((res)=>{
+    console.log(res);
+    showOutput(res)
+  })
 }
 
 // POST REQUEST
 function addTodo() {
   console.log('POST Request');
+  axios.post('https://jsonplaceholder.typicode.com/todos',{title:'Shivanand',completed:false}).then((res)=>{
+    showOutput(res)
+  })
 }
 
 // PUT/PATCH REQUEST
 function updateTodo() {
   console.log('PUT/PATCH Request');
+  axios.patch('https://jsonplaceholder.typicode.com/todos/201',{title:'Shivanand0018',completed:false}).then((res)=>{
+    showOutput(res)
+  })
 }
 
 // DELETE REQUEST
 function removeTodo() {
   console.log('DELETE Request');
+  axios.delete('https://jsonplaceholder.typicode.com/todos/1').then((res)=>{
+    showOutput(res)
+  })
 }
 
 // SIMULTANEOUS DATA
@@ -31,11 +44,24 @@ function customHeaders() {
 // TRANSFORMING REQUESTS & RESPONSES
 function transformResponse() {
   console.log('Transform Response');
+  const opt={
+    method:'post',
+    url:'https://jsonplaceholder.typicode.com/todos',
+    data:{title:'Shivanand'},
+  
+  transformResponse: axios.defaults.transformResponse.concat(data=>{
+      data.title=data.title.toUpperCase();
+      return data;
+  
+  })
+}
+
 }
 
 // ERROR HANDLING
 function errorHandling() {
   console.log('Error Handling');
+  
 }
 
 // CANCEL TOKEN
@@ -46,6 +72,10 @@ function cancelToken() {
 // INTERCEPTING REQUESTS & RESPONSES
 
 // AXIOS INSTANCES
+axios.interceptors.request.use(config=>{
+  console.log(`${config.method.toUpperCase()} request send to ${config.url}`);
+  return config
+})
 
 // Show output in browser
 function showOutput(res) {
